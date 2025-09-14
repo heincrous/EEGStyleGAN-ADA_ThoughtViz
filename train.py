@@ -526,17 +526,25 @@ def main(ctx, outdir, dry_run, **config_kwargs):
     with open(os.path.join(args.run_dir, 'training_options.json'), 'wt') as f:
         json.dump(args, f, indent=2)
 
-    # Launch processes.
-    print('Launching processes...')
-    try:
-        torch.multiprocessing.set_start_method('spawn')
-    except:
-        pass
-    with tempfile.TemporaryDirectory() as temp_dir:
-        if args.num_gpus == 1:
-            subprocess_fn(rank=0, args=args, temp_dir=temp_dir)
-        else:
-            torch.multiprocessing.spawn(fn=subprocess_fn, args=(args, temp_dir), nprocs=args.num_gpus)
+    # OLD CODE
+    # print('Launching processes...')
+    # try:
+    #     torch.multiprocessing.set_start_method('spawn')
+    # except:
+    #     pass
+    # with tempfile.TemporaryDirectory() as temp_dir:
+    #     if args.num_gpus == 1:
+    #         subprocess_fn(rank=0, args=args, temp_dir=temp_dir)
+    #     else:
+    #         torch.multiprocessing.spawn(fn=subprocess_fn, args=(args, temp_dir), nprocs=args.num_gpus)
+
+    # THIS IS A PATCH
+    if args.num_gpus == 1:
+    # Run training directly in the main process (fixes CUDA init bug on some systems)
+        import training.training_loop as training_loop
+        training_loop.training_loop(rank=0, **args)
+    else:
+        torch.multiprocessing.spawn(fn=subprocess_fn, args=(args, temp_dir), nprocs=args.num_gpus)
 
 #----------------------------------------------------------------------------
 
