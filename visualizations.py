@@ -1,7 +1,7 @@
 import numpy as np
 import umap
 # import umap.plot
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 from scipy.optimize import linear_sum_assignment as linear_assignment
 
