@@ -6,6 +6,7 @@
 # distribution of this software and related documentation without an express
 # license agreement from NVIDIA CORPORATION is strictly prohibited.
 
+# THIS HAS BEEN PATCHED
 import os
 import cv2
 import config
@@ -287,7 +288,8 @@ class EEG2ImageDataset(Dataset):
                 eeg  = (eeg - norm) / norm
                 self.eeg_feat.append(self.eeg_model(torch.from_numpy(np.expand_dims(eeg, axis=0)).to(config.device)).detach().cpu().numpy()[0])
 
-        # k_means             = K_means(n_clusters=config.n_classes)
+       # THIS IS A PATCH
+       # k_means             = K_means(n_clusters=config.n_classes)
         # clustering_acc_proj = k_means.transform(np.array(self.eeg_feat), np.array(self.labels))
         # print("[KMeans score Proj: {}]".format(clustering_acc_proj))
 
@@ -403,6 +405,7 @@ class Image2EEG2ImageDataset(Dataset):
         
         print(self.eeg_feat.shape)
         
+        # THIS IS A PATCH
         # k_means             = K_means(n_clusters=config.n_classes)
         # clustering_acc_proj = k_means.transform(np.array(self.eeg_feat), np.array(self.labels))
         # print("[Test KMeans score Proj: {}]".format(clustering_acc_proj))
