@@ -125,6 +125,9 @@ def training_loop(
 ):
     # Initialize.
     start_time = time.time()
+    # THIS IS A PATCH
+    device = torch.device(f'cuda:{rank}' if torch.cuda.is_available() else 'cpu')
+    # OLD CODE
     device = torch.device('cuda', rank)
     np.random.seed(random_seed * num_gpus + rank)
     torch.manual_seed(random_seed * num_gpus + rank)
