@@ -534,14 +534,7 @@ def main(ctx, outdir, dry_run, **config_kwargs):
         pass
     with tempfile.TemporaryDirectory() as temp_dir:
         if args.num_gpus == 1:
-            # --- PATCH START ---
-            # Original line (disabled because it causes CUDA re-init issues in single-GPU mode):
-            # subprocess_fn(rank=0, args=args, temp_dir=temp_dir)
-
-            # New line: run training loop directly in main process
-            import training.training_loop as training_loop
-            training_loop.training_loop(rank=0, **args)
-            # --- PATCH END ---
+            subprocess_fn(rank=0, args=args, temp_dir=temp_dir)
         else:
             torch.multiprocessing.spawn(fn=subprocess_fn, args=(args, temp_dir), nprocs=args.num_gpus)
 
