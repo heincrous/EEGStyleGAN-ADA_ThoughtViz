@@ -276,12 +276,11 @@ class EEG2ImageDataset(Dataset):
         for path in tqdm(natsorted(glob(self.dataset_path))):
             loaded_array = np.load(path, allow_pickle=True)
             # if loaded_array[2] in cls:
-            eeg = np.float32(np.squeeze(loaded_array[0], axis=-1).T)
+            eeg = np.float32(np.squeeze(loaded_array["0"], axis=-1).T)
             self.eegs.append(eeg)
-            # self.eegs.append(np.expand_dims(loaded_array[1].T, axis=0))
-            img = np.float32(cv2.resize(loaded_array[2], (config.image_height, config.image_width)))
+            img = np.float32(cv2.resize(loaded_array["2"], (config.image_height, config.image_width)))
             self.images.append(np.transpose(img, (2, 0, 1)))
-            self.labels.append(loaded_array[1])
+            self.labels.append(loaded_array["1"])
             # self.class_name.append(loaded_array[3])
             with torch.no_grad():
                 norm = np.max(eeg) / 2.0
