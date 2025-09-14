@@ -2,7 +2,9 @@ import torch
 import math
 import numpy as np
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# THIS IS A PATCH
+device = "cpu"
+# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # EEG Data
 train_data_path = '/media/A/dataset/eeg_imagenet40_cvpr_2017_raw/train/*'
