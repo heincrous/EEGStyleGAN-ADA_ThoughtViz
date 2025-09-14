@@ -22,7 +22,7 @@ from torch.utils.data import Dataset
 from network import EEGFeatNet, ImageFeatNet, EEGCNNFeatNet
 # from torchvision.models import GoogLeNet_Weights
 import torchvision.transforms as transforms
-from visualizations import K_means
+# from visualizations import K_means
 
 try:
     import pyspng
