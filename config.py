@@ -3,7 +3,7 @@ import math
 import numpy as np
 
 # THIS IS A PATCH
-device = "cpu"
+device = torch.device('cpu')
 # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # EEG Data
